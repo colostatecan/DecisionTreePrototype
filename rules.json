@@ -1,1 +1,34 @@
-
+[
+  {
+    "who": "student",
+    "where": "anywhere",
+    "when": "any time",
+    "may": "any thing",
+    "how": "any way",
+    "response": "🚫 Students are not eligible for reimbursements and should not buy items directly."
+  },
+  {
+    "who": "GTAs",
+    "where": "anywhere that accepts credit card payment",
+    "when": "any time",
+    "may": "allowed by pcard rules",
+    "how": "pcard",
+    "response": "✅ GTAs are allowed to buy from anywhere that accepts credit card payment, for delivery any time, but are limited by those things that are allowed by pcard rules, using their pcard."
+  },
+  {
+    "who": "GTAs",
+    "where": "Kuali Catalog",
+    "when": "any time",
+    "may": "allowed",
+    "how": "net 30 payment terms facilitated by Kuali Catalog rules",
+    "response": "✅ GTAs are allowed to buy from Kuali Catalog, for delivery any time; anything allowed will be purchased with a net 30 payment terms facilitated by Kuali Catalog rules."
+  }
+  {
+    "who": "EBO",
+    "where": "anywhere that accepts credit card payment",
+    "when": "any time",
+    "may": "allowed",
+    "how": "pcard",
+    "response": "✅ EBO is allowed to buy from anywhere that accepts credit card payment, for delivery any time, but are limited by those things that are allowed by pcard rules, using their pcard."
+  }
+]
