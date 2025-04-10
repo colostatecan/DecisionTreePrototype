@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Decision Tree Guardrails Bot</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 700px;
+      margin: auto;
+      padding: 2rem;
+      background-color: #f9f9f9;
+    }
+    .question {
+      margin-top: 1.5rem;
+    }
+    select, button {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    .response {
+      margin-top: 2rem;
+      background: #fff;
+      border-left: 5px solid #4caf50;
+      padding: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Decision Tree Guardrails Bot</h1>
+  <p>Answer questions to determine purchasing/travel policy compliance.</p>
+
+  <div id="questionContainer"></div>
+  <div class="response" id="response" style="display:none;"></div>
+
+  <script>
+    const container = document.getElementById("questionContainer");
+    const responseDiv = document.getElementById("response");
+    let rules = [];
+    let currentAnswers = {};
+    let questionOrder = ["who", "where", "when", "may", "how"];
+    let labels = {
+      who: "Who can buy?",
+      where: "Where can I buy?",
+      when: "When do I need it?",
+      may: "May I buy?",
+      how: "How to buy?"
+    };
+
+    fetch('rules.json')
+      .then(res => res.json())
+      .then(data => {
+        rules = data;
+        askQuestion(0);
+      });
+
+    function askQuestion(index) {
+      if (index >= questionOrder.length) {
+        showResponse();
+        return;
+      }
+
+      const key = questionOrder[index];
+      const questionDiv = document.createElement("div");
+      questionDiv.className = "question";
+      questionDiv.innerHTML = `<label for="${key}">${labels[key]}</label>`;
+
+      const select = document.createElement("select");
+      select.id = key;
+      select.name = key;
+      select.innerHTML = `<option value="">-- Select --</option>`;
+
+      const options = [...new Set(rules.map(rule => rule[key]))];
+      options.forEach(opt => {
+        const option = document.createElement("option");
+        option.value = opt;
+        option.textContent = opt;
+        select.appendChild(option);
+      });
+
+      select.addEventListener("change", () => {
+        currentAnswers[key] = select.value;
+        questionDiv.querySelector("select").disabled = true;
+        askQuestion(index + 1);
+      });
+
+      questionDiv.appendChild(select);
+      container.appendChild(questionDiv);
+    }
+
+    function showResponse() {
+      const match = rules.find(rule => {
+        return Object.entries(currentAnswers).every(([key, val]) => rule[key] === val);
+      });
+
+      let responseText = "Thank you for your request.
+";
+      if (match) {
+        responseText += match.response;
+      } else {
+        responseText += "⚠️ We couldn’t find a specific policy for your combination. Please consult your EBO.";
+      }
+
+      responseDiv.style.display = "block";
+      responseDiv.textContent = responseText;
+    }
+  </script>
+</body>
+</html>
