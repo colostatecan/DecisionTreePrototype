@@ -34,10 +34,12 @@
 
   <div id="questionContainer"></div>
   <div class="response" id="response" style="display:none;"></div>
+  <button id="restartButton" style="display:none; margin-top: 2rem;" onclick="restartBot()">🔁 Start Over</button>
 
   <script>
     const container = document.getElementById("questionContainer");
     const responseDiv = document.getElementById("response");
+    const restartButton = document.getElementById("restartButton");
     let rules = [];
     let currentAnswers = {};
     let questionOrder = ["who", "where", "when", "may", "how"];
@@ -118,6 +120,15 @@
 
       responseDiv.style.display = "block";
       responseDiv.textContent = responseText;
+      restartButton.style.display = "block";
+    }
+
+    function restartBot() {
+      container.innerHTML = "";
+      responseDiv.style.display = "none";
+      restartButton.style.display = "none";
+      currentAnswers = {};
+      askQuestion(0);
     }
   </script>
 </body>
