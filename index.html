@@ -50,10 +50,24 @@
     };
 
     fetch('rules.json')
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error("Failed to load rules.json");
+        return res.json();
+      })
       .then(data => {
         rules = data;
+        if (rules.length === 0) {
+          console.warn("rules.json is empty or malformed.");
+          return;
+        }
         askQuestion(0);
+      })
+      .catch(error => {
+        console.error("Error loading rules.json:", error);
+        const errorMsg = document.createElement("p");
+        errorMsg.style.color = "red";
+        errorMsg.textContent = "⚠️ Unable to load policy rules. Please check that rules.json exists and is valid.";
+        container.appendChild(errorMsg);
       });
 
     function askQuestion(index) {
@@ -95,8 +109,7 @@
         return Object.entries(currentAnswers).every(([key, val]) => rule[key] === val);
       });
 
-      let responseText = "Thank you for your request.
-";
+      let responseText = "Thank you for your request.\n";
       if (match) {
         responseText += match.response;
       } else {
