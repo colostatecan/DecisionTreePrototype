@@ -7,6 +7,22 @@
     "how": "pcard",
     "response": "✅ GTAs are allowed to buy from anywhere that accepts credit card payment, for delivery any time, but are limited by those things that are allowed by pcard rules, using their pcard."
   },
+ {
+    "who": "GTAs",
+    "where": "in-store",
+    "when": "any time",
+    "may": "allowed by pcard rules",
+    "how": "pcard",
+    "response": "✅ GTAs are allowed to buy from anywhere that accepts credit card payment, for delivery any time, but are limited by those things that are allowed by pcard rules, using their pcard."
+  }
+ {
+    "who": "GTAs",
+    "where": "online",
+    "when": "any time",
+    "may": "allowed by pcard rules",
+    "how": "pcard",
+    "response": "✅ GTAs are allowed to buy from anywhere that accepts credit card payment, for delivery any time, but are limited by those things that are allowed by pcard rules, using their pcard."
+  }
   {
     "who": "GTAs",
     "where": "Kuali Catalog",
